@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Birthday Surprise</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+      padding: 20px;
+      transition: background 0.5s ease;
+      background: #bbdefb;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #0d47a1;
+      margin-bottom: 10px;
+    }
+
+    #message {
+      font-size: 1.5em;
+      color: #333;
+      margin: 20px 0;
+      min-height: 50px;
+    }
+
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 30px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0d47a1;
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2em;
+      animation: fall 3s linear forwards;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    @keyframes fall {
+      0% {
+        top: -50px;
+        opacity: 1;
+        transform: translateX(0);
+      }
+      100% {
+        top: 110%;
+        opacity: 0;
+        transform: translateX(50px);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome, Tinni!</h1>
+  <div id="message">A small gift from Diboo!</div>
+  <button onclick="showSurprise()">Click</button>
+
+  <script>
+    const messages = [
+      "You're the reason blue skies feel brighter 💫",
+      "Just thinking of you makes me smile 😊",
+      "You're more brighter than moonlight 🌙",
+      "I feel lucky just knowing you 💙",
+      "🎉 Happy Birthday to my crush, Tinni! 🎂"
+    ];
+
+    const emojis = [
+      ["💫", "✨", "🌈"],
+      ["😊", "🥰", "😄"],
+      ["🌙", "🌟", "🌌"],
+      ["💙", "💖", "💞"],
+      ["🎂", "🎉", "🎈"]
+    ];
+
+    const colors = [
+      "#bbdefb",  // Light Blue
+      "#b3e5fc",  // Sky Blue
+      "#b2ebf2",  // Aqua
+      "#b2dfdb",  // Teal tint
+      "#c5cae9",  // Soft Indigo
+      "#e1bee7"   // Purple-ish
+    ];
+
+    let clickCount = 0;
+
+    function showSurprise() {
+      const msg = document.getElementById('message');
+      const body = document.body;
+
+      if (clickCount < messages.length) {
+        msg.innerText = messages[clickCount];
+        releaseEmojis(emojis[clickCount]);
+      } else {
+        msg.innerText = "💖 Hope you liked it!";
+        releaseEmojis(["💖", "🌹", "✨"]);
+      }
+
+      body.style.background = colors[clickCount % colors.length];
+      clickCount++;
+    }
+
+    function releaseEmojis(emojiList) {
+      for (let i = 0; i < 10; i++) {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.innerText = emojiList[Math.floor(Math.random() * emojiList.length)];
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 3000);
+      }
+    }
+  </script>
+</body>
+</html>
